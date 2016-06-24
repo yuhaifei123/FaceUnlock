@@ -71,7 +71,8 @@ const NSString  *face_key = @"75e26ab2c0415e91f88569582d26a1be";
 //      addface state =  [self.face_NOline logonFace_FaceImage:image_Right PersonName:@"yuhaifei"];
 //
 //        NSLog(@"%d",state);
-       [self.face_NOline judgeFaceAnGroup_FaceUIImage:image_Right];
+     addface state =   [self.face_NOline judgeFaceAnGroup_FaceUIImage:image_Right];
+        NSLog(@"%d",state);
     }
 }
 
