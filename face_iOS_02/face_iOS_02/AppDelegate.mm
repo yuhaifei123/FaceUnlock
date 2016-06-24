@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [FaceppAPI initWithApiKey:@"" andApiSecret:@""
+    [FaceppAPI initWithApiKey:@"75e26ab2c0415e91f88569582d26a1be" andApiSecret:@"QLyELNAZtyp-9Y-qdohBgOzTiOgwwKDN"
                     andRegion:APIServerRegionCN];
     [FaceppAPI setDebugMode:YES];
 
