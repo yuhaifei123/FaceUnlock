@@ -41,9 +41,12 @@ NSString* const groupName = @"集团的名字";
 
     addface faceState = [self face_AddfaceImage:faceImage PersonName:personName];
     if (faceState == addFaceTestNO) {
+        //groupAddPersonGood
+        faceState = [self groupAddPerson_PersonName:personName];
+        if (faceState == groupAddPersonGood) {
 
-        [self groupAddPerson_PersonName:personName];
-        [self groupTest];
+                faceState = [self groupTest];
+        }
     }
 
     return faceState;
@@ -246,7 +249,7 @@ NSString* const groupName = @"集团的名字";
 }
 
 /**
- *  人脸的照片和集团里面做比较
+ *  人脸的照片和集团里面做比较(识别)
  *
  *  @param iamge     脸的照片
  *
@@ -262,10 +265,48 @@ NSString* const groupName = @"集团的名字";
                                      orImageData:self.imageData
                                      orKeyFaceId:nil
                                            async:NO];
-    NSLog(@"%@",faceppResult.content);
 
-    return nil;
+    //判断数据解析是不是有问题
+    NSDictionary *dic_json = [self jsonGroup_Dic:faceppResult.content];
+    //判断相似度
+    NSString *string_confidence = [NSString stringWithFormat:@"%@",dic_json[@"confidence"]];
+    NSString *string_person_name = [NSString stringWithFormat:@"%@",dic_json[@"person_name"]];
+    if (dic_json == nil || [string_confidence isEqualToString:@"0"]) {
+
+        return jsonGroupNO;
+    }
+
+    //判断是不是同一个人，看返回数据
+    return [self judgeFace_PersonName:string_person_name UIImage:iamge];;
 }
+
+/**
+ *  需要解析的数据
+ *  -(addface) judgeFace_PersonName:(NSString *)personName UIImage:(UIImage *)iamge
+ *  @param 解析，和集团比较返回的数据
+ *
+ *  @return 字典[confidence,person_id,person_name,face_id]
+ */
+-(NSDictionary *) jsonGroup_Dic:(NSDictionary *)dic{
+
+    NSDictionary *dic_json;
+    //得到自己需要的数据
+    NSArray *array_face = dic[@"face"];
+
+    if (array_face.count < 1) {
+
+        return dic_json;
+    }
+
+    NSDictionary *dic_ArrayFace = array_face[0];
+    NSArray *array_candidate = dic_ArrayFace[@"candidate"];
+    NSDictionary *dic_Person = array_candidate[0];
+
+    dic_json = [NSDictionary dictionaryWithObjectsAndKeys:dic_Person[@"confidence"],@"confidence",dic_Person[@"person_id"],@"person_id",dic_Person[@"person_name"],@"person_name",dic_ArrayFace[@"face_id"],@"face_id",nil];
+
+    return dic_json;
+}
+
 
 /**
  *  添加集团（一个项目就只要一个集团）

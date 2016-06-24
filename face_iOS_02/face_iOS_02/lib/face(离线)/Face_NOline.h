@@ -24,6 +24,10 @@
  groupAddPersonNO       group添加人失败
  groupTestGood          group，测试成功
  groupTestNO            group，测试失败
+ jsonGroupGood          group，返回的数据，解析成功
+ jsonGroupNO            group，返回的数据，解析失败
+ groupJudgeGoog         group, 人脸识别成功
+ groupJudgeNO           group, 人脸识别失败
  */
 typedef enum {
                 arrayFaceIdCountFew = 1,
@@ -38,8 +42,11 @@ typedef enum {
                 groupAddPersonGood,
                 groupAddPersonNO,
                 groupTestGood,
-                groupTestNO
-
+                groupTestNO,
+                jsonGroupGood,
+                jsonGroupNO,
+                groupJudgeGoog,
+                groupJudgeNO
 } addface;
 
 /**
