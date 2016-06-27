@@ -277,7 +277,7 @@ NSString* const groupName = @"集团的名字";
     }
 
     //判断是不是同一个人，看返回数据
-    return [self judgeFace_PersonName:string_person_name UIImage:iamge];;
+    return [self judgeFace_PersonName:string_person_name UIImage:iamge];
 }
 
 /**
